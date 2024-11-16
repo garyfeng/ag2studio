@@ -7,6 +7,7 @@ name = "ag2studio"
 authors = [
   { name="Chi Wang & Jingyun Wu", email="support@ag2.ai" },
 ]
+dynamic = ["version"]
 description = "AG2 Studio"
 readme = "README.md"
 license = { file="LICENSE" }
