@@ -19,7 +19,7 @@ const Footer = () => {
   return (
     <div className=" mt-4 text-primary p-3  border-t border-secondary flex ">
       <div className="text-xs flex-1">
-        Maintained by the AutoGen{" "}
+        Maintained by the AG2{" "}
         <a
           target={"_blank"}
           rel={"noopener noreferrer"}

@@ -167,8 +167,8 @@ def init_db_samples(dbmanager: Any):
     logger.info("Initializing database with Default and Travel Planning Workflows")
     # models
     gpt_4_model = Model(
-        model="gpt-4-1106-preview",
-        description="OpenAI GPT-4 model",
+        model="gpt-4o-mini",
+        description="OpenAI GPT-4o mini model",
         user_id="guestuser@gmail.com",
         api_type="open_ai",
     )

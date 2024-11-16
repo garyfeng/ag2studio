@@ -37,8 +37,8 @@ const Provider = ({ children }: any) => {
   const logout = () => {
     // setUser(null);
     // eraseCookie(cookie_name);
-    console.log("Please implement your own logout logic");
-    message.info("Please implement your own logout logic");
+    console.log("Please implement your own Sign out logic");
+    message.info("Please implement your own Sign out logic");
   };
 
   const updateDarkMode = (darkMode: string) => {

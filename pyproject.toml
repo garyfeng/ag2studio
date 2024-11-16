@@ -9,9 +9,9 @@ authors = [
 ]
 dynamic = ["version"]
 description = "AG2 Studio"
-readme = "README.md"
+readme = "PyPiREADME.md"
 license = { file="LICENSE" }
-requires-python = ">=3.9, <3.13"
+requires-python = ">=3.9"
 classifiers = [
     "Programming Language :: Python :: 3",
     "License :: OSI Approved :: Apache Software License",
@@ -48,7 +48,7 @@ include-package-data = true
 
 [tool.setuptools.dynamic]
 version = {attr = "ag2studio.version.VERSION"}
-readme = {file = ["README.md"]}
+readme = {file = ["PyPiREADME.md"]}
 
 [tool.setuptools.packages.find]
 include = ["ag2studio*"]
