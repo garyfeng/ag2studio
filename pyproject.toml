@@ -33,7 +33,11 @@ dependencies = [
     "alembic",
     "loguru",
 ]
-optional-dependencies = {web = ["fastapi", "uvicorn"], database = ["psycopg"]}
+
+[project.optional-dependencies]
+web = ["fastapi", "uvicorn"]
+database = ["psycopg"]
+all = ["ag2studio[web]", "ag2studio[database]"]
 
 dynamic = ["version"]
 
