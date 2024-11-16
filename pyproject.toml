@@ -5,7 +5,7 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "ag2studio"
 authors = [
-  { name="TBD", email="tbd@tbd.com" },
+  { name="Chi Wang & Jingyun Wu", email="support@ag2.ai" },
 ]
 description = "AG2 Studio"
 readme = "README.md"
@@ -13,7 +13,7 @@ license = { file="LICENSE" }
 requires-python = ">=3.9, <3.13"
 classifiers = [
     "Programming Language :: Python :: 3",
-    "License :: OSI Approved :: MIT License",
+    "License :: OSI Approved :: Apache Software License",
     "Operating System :: OS Independent",
 ]
 
@@ -61,8 +61,8 @@ filterwarnings = [
 
 
 [project.urls]
-"Homepage" = "https://github.com/autogenhub/autogen"
-"Bug Tracker" = "https://github.com/autogenhub/autogen/issues"
+"Homepage" = "https://github.com/ag2ai/ag2"
+"Bug Tracker" = "https://github.com/ag2ai/ag2/issues"
 
 [project.scripts]
 ag2studio = "ag2studio.cli:run"
