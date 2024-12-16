@@ -12,3 +12,5 @@ dist/
 
 # Environments
 test_env/
+/ag2studio/web/ui
+/venv
