@@ -13,8 +13,11 @@ import Editor from "@monaco-editor/react";
 import Papa from "papaparse";
 import remarkGfm from "remark-gfm";
 import ReactMarkdown from "react-markdown";
-import { Light as SyntaxHighlighter } from 'react-syntax-highlighter';
-import { atomDark } from 'react-syntax-highlighter/dist/cjs/styles/prism';
+import { atomDark } from "react-syntax-highlighter/dist/esm/styles/prism";
+
+import { Prism, SyntaxHighlighterProps } from 'react-syntax-highlighter';
+const SyntaxHighlighter = (Prism as any) as React.FC<SyntaxHighlighterProps>;
+
 import { truncateText } from "./utils";
 
 const { useToken } = theme;
@@ -74,17 +77,16 @@ const CodeView = ({ children, language, showCode = true }: CodeViewProps) => {
           )}
         </div>
       </div>
-      {/* {codeVisible && (
+      {codeVisible && (
         <SyntaxHighlighter
-          style={atomDark}
-          language={language}
-          className="rounded w-full"
-          PreTag="div"
-          wrapLongLines={true}
-        >
-          {String(children).replace(/\n$/, "")}
-        </SyntaxHighlighter>
-      )} */}
+        id="codeDiv"
+        className="rounded-sm h-full break-all"
+        children={String(children).replace(/\n$/, "")}
+        language={language}
+        PreTag="div"
+        style={atomDark}
+      />
+      )}
     </div>
   );
 };
@@ -122,9 +124,8 @@ export const IconButton = ({
     <span
       role={"button"}
       onClick={onClick}
-      className={`inline-block mr-2 hover:text-accent transition duration-300 ${className} ${
-        active ? "border-accent border rounded text-accent" : ""
-      }`}
+      className={`inline-block mr-2 hover:text-accent transition duration-300 ${className} ${active ? "border-accent border rounded text-accent" : ""
+        }`}
     >
       {icon}
     </span>
@@ -216,9 +217,8 @@ export const CollapseBox = ({
         onClick={() => {
           setIsOpen(!isOpen);
         }}
-        className={`cursor-pointer bg-secondary p-2 rounded ${
-          isOpen ? "rounded-b-none " : " "
-        }"}`}
+        className={`cursor-pointer bg-secondary p-2 rounded ${isOpen ? "rounded-b-none " : " "
+          }"}`}
       >
         {isOpen && <ChevronUpIcon className={chevronClass} />}
         {!isOpen && <ChevronDownIcon className={chevronClass} />}
@@ -530,17 +530,17 @@ export const CodeBlock = ({
         className={`rounded w-full overflow-auto overflow-y-scroll   scroll ${className}`}
         style={{ maxHeight: maxHeight, minHeight: minHeight }}
       >
-        {/* <SyntaxHighlighter
+        <SyntaxHighlighter
           id="codeDiv"
           className="rounded-sm h-full break-all"
+          children={codeString}
           language={language}
+          PreTag="div"
           showLineNumbers={showLineNumbers}
           style={atomDark}
           wrapLines={wrapLines}
           wrapLongLines={wrapLines}
-        >
-          {codeString}
-        </SyntaxHighlighter> */}
+        />
       </div>
     </div>
   );
@@ -598,9 +598,8 @@ export const ImageLoader = ({
       <img
         alt="Dynamic content"
         src={src}
-        className={`w-full  rounded ${
-          isLoading ? "opacity-0" : "opacity-100"
-        } ${className}`}
+        className={`w-full  rounded ${isLoading ? "opacity-0" : "opacity-100"
+          } ${className}`}
         onLoad={() => setIsLoading(false)}
       />
     </div>
