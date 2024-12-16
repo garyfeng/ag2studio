@@ -7,7 +7,7 @@
   "scripts": {
     "dev": "next dev",
     "clean": "rimraf .next out",
-    "build": "npm run clean && next build && rimraf ../ag2studio/web/ui && rsync -a --delete public/ ../ag2studio/web/ui/",
+    "build": "npm run clean && next build && rimraf ../ag2studio/web/ui && cp -r out/ ../ag2studio/web/ui/",
     "build-windows": "npm run clean && next build && rimraf ../ag2studio/web/ui && xcopy /E /I /Y out ..\\ag2studio\\web\\ui",
     "start": "next start",
     "lint": "next lint",
