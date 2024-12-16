@@ -16,3 +16,4 @@ test_env/
 /venv
 /frontend/.next
 /frontend/out
+.env
