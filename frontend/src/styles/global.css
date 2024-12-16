@@ -360,8 +360,6 @@ div.chatbox > ol {
   list-style: decimal !important;
 } */
 
-div#___gatsby,
-div#gatsby-focus-wrapper {
+#app {
   height: 100%;
-  /* border: 1px solid green; */
 }

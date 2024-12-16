@@ -9,7 +9,10 @@ import {
 } from "./types";
 
 export const getServerUrl = () => {
-  return process.env.GATSBY_API_URL || "/api";
+  if (typeof window === "undefined") {
+    return "/api";
+  }
+  return process.env.NEXT_PUBLIC_API_URL || "/api";
 };
 
 export function setCookie(name: string, value: any, days: number) {

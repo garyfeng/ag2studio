@@ -1,3 +1,5 @@
+'use client'
+
 import Icon from "./icons";
 import { Disclosure, Menu, Transition } from "@headlessui/react";
 import {
@@ -9,15 +11,17 @@ import {
 } from "@heroicons/react/24/outline";
 import { Fragment } from "react";
 import { appContext } from "../hooks/provider";
-import { Link } from "gatsby";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 import React from "react";
 
 function classNames(...classes: string[]) {
   return classes.filter(Boolean).join(" ");
 }
 
-const Header = ({ meta, link }: any) => {
+const Header = ({ meta = { title: "AG2Studio", description: "AI Agent Studio" }, link }: any) => {
   const { user, logout } = React.useContext(appContext);
+  const pathname = usePathname();
   const userName = user ? user.name : "Unknown";
   const userAvatarUrl = user ? user.avatar_url : "";
   const user_id = user ? user.username : "unknown";
@@ -69,7 +73,7 @@ const Header = ({ meta, link }: any) => {
             <div className="flex justify-between h-16">
               <div className="flex  lg:px-0 ">
                 <div className="flex flex-shrink-0 pt-2">
-                  <a className="block  " href="/#">
+                  <Link href="/" className="block">
                     <span className=" bg-primary  inline-block pt-2 absolute">
                       {" "}
                       <div className="inline-block w-10  text-accent   bg-primary pb-2 mr-1">
@@ -82,13 +86,13 @@ const Header = ({ meta, link }: any) => {
                         <div className="text-xs"> {meta.description}</div>
                       </div>
                     </div>
-                  </a>
+                  </Link>
                 </div>
 
                 <div className="hidden md:ml-6 md:flex md:space-x-6">
                   {/* Current: "border-accent text-gray-900", Default: "border-transparent text-secondary hover:border-gray-300 hover:text-primary" */}
                   {links.map((data, index) => {
-                    const isActive = data.href === link;
+                    const isActive = pathname === data.href;
                     const activeClass = isActive
                       ? "bg-accent  "
                       : "bg-secondary ";
@@ -98,8 +102,8 @@ const Header = ({ meta, link }: any) => {
                         className={`text-primary  items-center hover:text-accent  px-1 pt-1 block   text-sm font-medium `}
                       >
                         <Link
+                          href={data.href}
                           className="hover:text-accent h-full flex flex-col"
-                          to={data.href}
                         >
                           <div className=" flex-1 flex-col flex">
                             <div className="flex-1"></div>
@@ -174,9 +178,7 @@ const Header = ({ meta, link }: any) => {
                           >
                             Your Profile
                           </a>
-                        )}
-                      </Menu.Item> */}
-
+                        )} */}
                             <Menu.Item>
                               {({ active }) => (
                                 <a

@@ -1,19 +1,23 @@
+'use client'
+
+import { message } from "antd";
 import * as React from "react";
+import { useRouter } from 'next/navigation';
 import { appContext } from "../../../hooks/provider";
 import { fetchJSON, getServerUrl, timeAgo, truncateText } from "../../utils";
 import { IGalleryItem, IStatus } from "../../types";
-import { Button, message } from "antd";
+import { Button } from "antd";
 import { BounceLoader, Card } from "../../atoms";
 import {
   ChevronLeftIcon,
   InformationCircleIcon,
 } from "@heroicons/react/24/outline";
-import { navigate } from "gatsby";
 import ChatBox from "../playground/chatbox";
 
 const GalleryView = ({ location }: any) => {
   const serverUrl = getServerUrl();
   const { user } = React.useContext(appContext);
+  const router = useRouter();
   const [loading, setLoading] = React.useState(false);
   const [gallery, setGallery] = React.useState<null | IGalleryItem[]>(null);
   const [currentGallery, setCurrentGallery] =
@@ -86,10 +90,10 @@ const GalleryView = ({ location }: any) => {
       <div>
         <div className="mb-4 text-sm">
           This session contains {item.messages.length} messages and was created{" "}
-          {timeAgo(item.timestamp)}
+          {timeAgo(item.created_at)}
         </div>
         <div className="">
-          <ChatBox initMessages={item.messages} editable={false} />
+          <ChatBox initMessages={item.messages} session={item.session} editable={false} />
         </div>
       </div>
     );
@@ -117,7 +121,7 @@ const GalleryView = ({ location }: any) => {
           onClick={() => {
             setCurrentGallery(item);
             // add to history
-            navigate(`/gallery?id=${item.id}`);
+            router.push(`/gallery?id=${item.id}`);
           }}
           className="h-full p-2 cursor-pointer"
           title={truncateText(item.messages[0]?.content || "", 20)}
@@ -133,7 +137,7 @@ const GalleryView = ({ location }: any) => {
           <div className="my-2 border-t border-dashed w-full pt-2 inline-flex gap-2 ">
             <TagsView tags={item.tags} />{" "}
           </div>
-          <div className="text-xs">{timeAgo(item.timestamp)}</div>
+          <div className="text-xs">{timeAgo(item.created_at)}</div>
         </Card>
       </div>
     );
@@ -152,7 +156,7 @@ const GalleryView = ({ location }: any) => {
             onClick={() => {
               setCurrentGallery(null);
               // add to history
-              navigate(`/gallery?_=${Date.now()}`);
+              router.push(`/gallery?_=${Date.now()}`);
               if (currentGalleryId) {
                 fetchGallery(null);
                 setCurrentGalleryId(null);
