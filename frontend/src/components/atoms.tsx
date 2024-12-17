@@ -438,7 +438,7 @@ export const MarkdownView = ({
   showCode?: boolean;
 }) => {
   function processString(inputString: string): string {
-    inputString = inputString.replace(/\n/g, "  \n");
+    inputString = inputString?.replace(/\n/g, "  \n");
     const markdownPattern = /```markdown\s+([\s\S]*?)\s+```/g;
     return inputString?.replace(markdownPattern, (match, content) => content);
   }
