@@ -40,6 +40,7 @@ const Header = ({ meta = { title: "AG2Studio", description: "AI Agent Studio" },
       <button
         onClick={() => {
           const newMode = darkMode === "dark" ? "light" : "dark";
+          console.log('Toggling dark mode to:', newMode);
           setDarkMode(newMode);
         }}
         type="button"

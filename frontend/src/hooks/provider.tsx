@@ -16,23 +16,28 @@ export interface IUser {
   metadata?: any;
 }
 
-export interface AppContextType {
+interface IAppContext {
   user: IUser | null;
-  setUser: any;
-  logout: any;
+  setUser: (user: IUser | null) => void;
+  logout: () => void;
   cookie_name: string;
   darkMode: string;
-  setDarkMode: any;
+  setDarkMode: (mode: string) => void;
 }
 
 const cookie_name = "coral_app_cookie_";
 
-export const appContext = React.createContext<AppContextType>(
-  {} as AppContextType
-);
+export const appContext = React.createContext<IAppContext>({
+  user: null,
+  setUser: () => {},
+  logout: () => {},
+  cookie_name: "",
+  darkMode: "dark",
+  setDarkMode: () => {},
+});
 
 export function AppProvider({ children }: { children: React.ReactNode }) {
-  const [darkMode, setDarkMode] = useState('dark')
+  const [darkMode, setDarkMode] = useState<string>('dark');
   const [user, setUser] = useState<IUser | null>({
     name: "Guest User",
     email: "guestuser@gmail.com",
@@ -46,10 +51,13 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
   };
 
   const handleDarkModeChange = (mode: string) => {
+    console.log('Setting dark mode to:', mode);
     setDarkMode(mode);
     setLocalStorage("darkmode", mode);
     if (typeof document !== 'undefined') {
       document.documentElement.classList.toggle('dark', mode === 'dark');
+      document.documentElement.classList.toggle('light', mode === 'light');
+      document.body.style.backgroundColor = mode === 'dark' ? '#111827' : '#ffffff';
     }
   };
 
@@ -60,17 +68,17 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
     handleDarkModeChange(initialMode);
   }, []);
 
+  const contextValue: IAppContext = {
+    user,
+    setUser,
+    logout,
+    cookie_name,
+    darkMode,
+    setDarkMode: handleDarkModeChange,
+  };
+
   return (
-    <appContext.Provider
-      value={{
-        user,
-        setUser,
-        logout,
-        cookie_name,
-        darkMode,
-        setDarkMode: handleDarkModeChange,
-      }}
-    >
+    <appContext.Provider value={contextValue}>
       {children}
     </appContext.Provider>
   );

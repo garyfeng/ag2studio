@@ -3,47 +3,31 @@
 @tailwind utilities;
 
 :root {
+  --color-text-primary: #334155;
+  --color-bg-primary: #ffffff;
+  --color-border-primary: #e2e8f0;
+  --color-bg-accent: #22c55e;
+  --color-border-accent: #22c55e;
   color-scheme: light dark;
 }
 
-html.dark {
-  --color-bg-primary: #111827;
-  --color-bg-secondary: #1e293b;
-  --color-bg-light: #27354c;
-  --color-bg-tertiary: #374151;
-  --color-bg-accent: #22c55e;
+.dark {
   --color-text-primary: #f7fafc;
-  --color-text-secondary: #e2e8f0;
-  --color-text-accent: #22c55e;
-  --color-border-primary: #f7fafc;
-  --color-border-secondary: #e2e8f045;
+  --color-bg-primary: #111827;
+  --color-border-primary: #374151;
+  --color-bg-accent: #22c55e;
   --color-border-accent: #22c55e;
-}
-
-html.light {
-  --color-bg-primary: #ffffff;
-  --color-bg-secondary: #edf2f7;
-  --color-bg-light: #f9fafb;
-  --color-bg-tertiary: #ffffff;
-  --color-bg-accent: #16a34a;
-  --color-text-primary: #334155;
-  --color-text-secondary: #64748b;
-  --color-text-accent: #16a34a;
-  --color-border-primary: #2d3748c1;
-  --color-border-secondary: #edf2f7;
-  --color-border-accent: #16a34a;
 }
 
 body {
   min-height: 100vh;
-  background-color: var(--color-bg-primary);
+  background-color: var(--color-bg-primary) !important;
   color: var(--color-text-primary);
   /* padding: 0px 64px 0px 64px; */
   @apply px-4 md:px-8 lg:px-16 !important;
   /* margin: 0px auto; */
   min-width: 300px;
   max-width: 1400px;
-  background: transparent;
   height: 100%;
   /* border: 2px solid green;  */
   display: table-cell;
@@ -51,28 +35,51 @@ body {
   width: 100%;
 }
 
+.bg-primary {
+  background-color: var(--color-bg-primary);
+}
+
+.text-primary {
+  color: var(--color-text-primary);
+}
+
+.text-secondary {
+  color: var(--color-text-primary);
+}
+
 /* Ant Design overrides */
+.ant-btn {
+  color: var(--color-text-primary) !important;
+  background-color: var(--color-bg-primary) !important;
+}
+
 .ant-btn-primary {
   background-color: var(--color-bg-accent) !important;
+  border-color: var(--color-border-accent) !important;
+  color: white !important;
 }
 
-.dark .ant-btn-primary {
-  background-color: var(--color-bg-accent) !important;
-  border-color: var(--color-border-accent) !important;
+.ant-btn-primary:hover {
+  background-color: #1ea352 !important;
+  border-color: #1ea352 !important;
+  color: white !important;
 }
 
-.light .ant-btn-primary {
-  background-color: var(--color-bg-accent) !important;
+.ant-btn-default {
+  background-color: transparent !important;
+  border-color: var(--color-border-primary) !important;
+  color: var(--color-text-primary) !important;
+}
+
+.ant-btn-default:hover {
   border-color: var(--color-border-accent) !important;
+  color: var(--color-border-accent) !important;
 }
 
 .ant-tabs-tab.ant-tabs-tab-active .ant-tabs-tab-btn {
-  @apply text-accent !important;
-  font-weight: 500;
+  color: var(--color-bg-accent) !important;
 }
-.ant-tabs-nav::before {
-  @apply border-secondary !important;
-}
+
 .ant-tabs-tab:hover {
   @apply text-accent !important;
 }
@@ -372,9 +379,12 @@ div.chatbox > ol {
 
 #app {
   height: 100%;
+  background-color: var(--color-bg-primary) !important;
 }
 
 html {
   display: table;
   margin: auto;
+  background-color: var(--color-bg-primary) !important;
+  min-height: 100vh;
 }
