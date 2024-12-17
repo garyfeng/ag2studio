@@ -34,32 +34,21 @@ const Header = ({ meta = { title: "AG2Studio", description: "AI Agent Studio" },
   ];
 
   const DarkModeToggle = () => {
+    const { darkMode, setDarkMode } = React.useContext(appContext);
+    
     return (
-      <appContext.Consumer>
-        {(context: any) => {
-          return (
-            <button
-              onClick={() => {
-                if (context.darkMode === "dark") {
-                  context.setDarkMode("light");
-                } else {
-                  context.setDarkMode("dark");
-                }
-              }}
-              type="button"
-              className="flex-shrink-0 bg-primary p-1 text-secondary rounded-full hover:text-secondary focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-accent"
-            >
-              <span className="sr-only">Toggle dark mode </span>
-              {context.darkMode === "dark" && (
-                <MoonIcon className="h-6 w-6" aria-hidden="true" />
-              )}
-              {context.darkMode === "light" && (
-                <SunIcon className="h-6 w-6" aria-hidden="true" />
-              )}
-            </button>
-          );
-        }}
-      </appContext.Consumer>
+      <button
+        onClick={() => setDarkMode(darkMode === "dark" ? "light" : "dark")}
+        type="button"
+        className="flex-shrink-0 bg-primary p-1 text-secondary rounded-full hover:text-secondary focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-accent"
+      >
+        <span className="sr-only">Toggle dark mode</span>
+        {darkMode === "dark" ? (
+          <SunIcon className="h-6 w-6" aria-hidden="true" />
+        ) : (
+          <MoonIcon className="h-6 w-6" aria-hidden="true" />
+        )}
+      </button>
     );
   };
   return (

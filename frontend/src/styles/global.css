@@ -1,3 +1,24 @@
+:root {
+  color-scheme: light dark;
+}
+
+body {
+  min-height: 100vh;
+  background-color: var(--color-bg-primary);
+  color: var(--color-text-primary);
+  /* padding: 0px 64px 0px 64px; */
+  @apply px-4 md:px-8 lg:px-16 !important;
+  /* margin: 0px auto; */
+  min-width: 300px;
+  max-width: 1400px;
+  background: transparent;
+  height: 100%;
+  /* border: 2px solid green;  */
+  display: table-cell;
+  vertical-align: middle;
+  width: 100%;
+}
+
 .dark {
   --color-bg-primary: #111827;
   --color-bg-secondary: #1e293b;
@@ -41,20 +62,20 @@ html {
   margin: auto;
 }
 
-body {
-  /* padding: 0px 64px 0px 64px; */
-  @apply px-4 md:px-8 lg:px-16 !important;
-  /* margin: 0px auto; */
-  min-width: 300px;
-  max-width: 1400px;
-  background: transparent;
-  height: 100%;
-  /* border: 2px solid green;  */
-  display: table-cell;
-  vertical-align: middle;
-  width: 100%;
+/* Ant Design overrides */
+.ant-btn-primary {
+  background-color: var(--color-bg-accent) !important;
 }
-/* @import "antd/dist/antd.css"; */
+
+.dark .ant-btn-primary {
+  background-color: var(--color-bg-accent) !important;
+  border-color: var(--color-border-accent) !important;
+}
+
+.light .ant-btn-primary {
+  background-color: var(--color-bg-accent) !important;
+  border-color: var(--color-border-accent) !important;
+}
 
 .ant-tabs-tab.ant-tabs-tab-active .ant-tabs-tab-btn {
   @apply text-accent !important;

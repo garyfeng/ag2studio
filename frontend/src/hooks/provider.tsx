@@ -45,16 +45,20 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
     message.info("Please implement your own Sign out logic");
   };
 
-  useEffect(() => {
-    if (typeof window === 'undefined') return;
-    const storedValue = getLocalStorage("darkmode", false);
-    setDarkMode(storedValue === null ? "light" : storedValue === "dark" ? "dark" : "light");
-  }, []);
+  const handleDarkModeChange = (mode: string) => {
+    setDarkMode(mode);
+    setLocalStorage("darkmode", mode);
+    if (typeof document !== 'undefined') {
+      document.documentElement.classList.toggle('dark', mode === 'dark');
+    }
+  };
 
   useEffect(() => {
     if (typeof window === 'undefined') return;
-    setLocalStorage("darkmode", darkMode, false);
-  }, [darkMode]);
+    const storedValue = getLocalStorage("darkmode", false);
+    const initialMode = storedValue === null ? "light" : storedValue === "dark" ? "dark" : "light";
+    handleDarkModeChange(initialMode);
+  }, []);
 
   return (
     <appContext.Provider
@@ -64,7 +68,7 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
         logout,
         cookie_name,
         darkMode,
-        setDarkMode,
+        setDarkMode: handleDarkModeChange,
       }}
     >
       {children}
