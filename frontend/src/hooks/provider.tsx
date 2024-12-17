@@ -35,7 +35,7 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
   const [darkMode, setDarkMode] = useState('light')
   const [user, setUser] = useState<IUser | null>({
     name: "Guest User",
-    email: "guest@example.com",
+    email: "guestuser@gmail.com",
   });
 
   const logout = () => {

@@ -1,7 +1,7 @@
 'use client'
 
-import { useEffect, useContext } from 'react'
-import { appContext } from '../hooks/provider'
+import { useContext } from 'react'
+import { appContext, AppProvider } from '../hooks/provider'
 import Header from '../components/header'
 import Footer from '../components/footer'
 
@@ -12,19 +12,15 @@ export default function ClientLayout({
 }) {
   const { darkMode } = useContext(appContext)
 
-  useEffect(() => {
-    if (typeof document !== 'undefined') {
-      document.documentElement.className = darkMode === "dark" ? "dark bg-primary" : "light bg-primary"
-    }
-  }, [darkMode])
-
   return (
-    <div className="min-h-screen flex flex-col">
-      <Header />
-      <div className="flex-1 text-primary">
-        {children}
-      </div>
-      <Footer />
+    <div id="app" className={darkMode === "dark" ? "dark bg-primary" : "light bg-primary"}>
+      <AppProvider>
+        <Header />
+        <div className="flex-1 text-primary">
+          {children}
+        </div>
+        <Footer />
+      </AppProvider>
     </div>
   )
 }

@@ -1,6 +1,7 @@
-import { Metadata } from 'next/types'
 import '../styles/global.css'
 import 'antd/dist/reset.css'
+import { Metadata } from 'next'
+import ClientLayout from './client-layout'
 
 export const metadata: Metadata = {
   title: 'AG2 Studio',
@@ -13,11 +14,11 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en">
-      <body suppressHydrationWarning>
-        <div id="app">
+    <html lang="en" className="h-full">
+      <body suppressHydrationWarning className="h-full">
+        <ClientLayout>
           {children}
-        </div>
+        </ClientLayout>
       </body>
     </html>
   )
