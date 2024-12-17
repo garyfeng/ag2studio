@@ -12,6 +12,7 @@ const themeConfig = {
       colorPrimary: '#16a34a',
       colorBgContainer: '#ffffff',
       colorText: '#334155',
+      colorBgBase: '#ffffff',
     },
     components: {
       Button: {
@@ -25,6 +26,7 @@ const themeConfig = {
       colorPrimary: '#22c55e',
       colorBgContainer: '#111827',
       colorText: '#f7fafc',
+      colorBgBase: '#111827',
     },
     components: {
       Button: {
@@ -40,33 +42,37 @@ export default function ClientLayout({
 }: {
   children: React.ReactNode
 }) {
-  const { darkMode } = useContext(appContext)
+  const { darkMode } = useContext(appContext);
   const currentTheme = darkMode === "dark" ? themeConfig.dark : themeConfig.light;
 
+  // Apply dark mode class to html element
   useEffect(() => {
-    // Apply dark mode to document body
-    document.body.className = darkMode === "dark" ? "dark bg-primary" : "light bg-primary";
+    if (darkMode === "dark") {
+      document.documentElement.classList.add("dark");
+      document.documentElement.classList.remove("light");
+    } else {
+      document.documentElement.classList.add("light");
+      document.documentElement.classList.remove("dark");
+    }
   }, [darkMode]);
 
   return (
-    <div id="app" className={`${darkMode === "dark" ? "dark" : "light"} min-h-screen bg-primary`}>
-      <AppProvider>
-        <ConfigProvider
-          theme={{
-            ...currentTheme,
-            algorithm: darkMode === "dark" ? theme.darkAlgorithm : theme.defaultAlgorithm,
-          }}
-          wave={{ disabled: true }}
-        >
-          <div className="min-h-screen bg-primary">
-            <Header />
-            <div className="flex-1 text-primary">
-              {children}
-            </div>
-            <Footer />
+    <AppProvider>
+      <ConfigProvider
+        theme={{
+          ...currentTheme,
+          algorithm: darkMode === "dark" ? theme.darkAlgorithm : theme.defaultAlgorithm,
+        }}
+        wave={{ disabled: true }}
+      >
+        <div className="min-h-screen bg-primary">
+          <Header />
+          <div className="flex-1 text-primary">
+            {children}
           </div>
-        </ConfigProvider>
-      </AppProvider>
-    </div>
-  )
+          <Footer />
+        </div>
+      </ConfigProvider>
+    </AppProvider>
+  );
 }

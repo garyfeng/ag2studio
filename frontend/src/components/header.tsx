@@ -38,7 +38,10 @@ const Header = ({ meta = { title: "AG2Studio", description: "AI Agent Studio" },
     
     return (
       <button
-        onClick={() => setDarkMode(darkMode === "dark" ? "light" : "dark")}
+        onClick={() => {
+          const newMode = darkMode === "dark" ? "light" : "dark";
+          setDarkMode(newMode);
+        }}
         type="button"
         className="flex-shrink-0 bg-primary p-1 text-secondary rounded-full hover:text-secondary focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-accent"
       >

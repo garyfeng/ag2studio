@@ -32,7 +32,7 @@ export const appContext = React.createContext<AppContextType>(
 );
 
 export function AppProvider({ children }: { children: React.ReactNode }) {
-  const [darkMode, setDarkMode] = useState('light')
+  const [darkMode, setDarkMode] = useState('dark')
   const [user, setUser] = useState<IUser | null>({
     name: "Guest User",
     email: "guestuser@gmail.com",
@@ -56,7 +56,7 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
   useEffect(() => {
     if (typeof window === 'undefined') return;
     const storedValue = getLocalStorage("darkmode", false);
-    const initialMode = storedValue === null ? "light" : storedValue === "dark" ? "dark" : "light";
+    const initialMode = storedValue === null ? "dark" : storedValue === "dark" ? "dark" : "light";
     handleDarkModeChange(initialMode);
   }, []);
 
