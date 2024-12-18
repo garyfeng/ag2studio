@@ -2,6 +2,9 @@
 @tailwind components;
 @tailwind utilities;
 
+@import url('https://fonts.googleapis.com/css2?family=Jersey+10&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&display=swap');
+
 :root {
   --color-text-primary: #334155;
   --color-bg-primary: #ffffff;
@@ -33,6 +36,7 @@ body {
   display: table-cell;
   vertical-align: middle;
   width: 100%;
+  font-family: 'JetBrains Mono', monospace;
 }
 
 .bg-primary {
