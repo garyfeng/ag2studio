@@ -1,4 +1,6 @@
-import React, { useState } from "react";
+'use client'
+
+import React, { useState, useEffect } from "react";
 import {
   eraseCookie,
   getLocalStorage,
@@ -14,60 +16,70 @@ export interface IUser {
   metadata?: any;
 }
 
-export interface AppContextType {
+interface IAppContext {
   user: IUser | null;
-  setUser: any;
-  logout: any;
+  setUser: (user: IUser | null) => void;
+  logout: () => void;
   cookie_name: string;
   darkMode: string;
-  setDarkMode: any;
+  setDarkMode: (mode: string) => void;
 }
 
 const cookie_name = "coral_app_cookie_";
 
-export const appContext = React.createContext<AppContextType>(
-  {} as AppContextType
-);
-const Provider = ({ children }: any) => {
-  const storedValue = getLocalStorage("darkmode", false);
-  const [darkMode, setDarkMode] = useState(
-    storedValue === null ? "light" : storedValue === "dark" ? "dark" : "light"
-  );
+export const appContext = React.createContext<IAppContext>({
+  user: null,
+  setUser: () => {},
+  logout: () => {},
+  cookie_name: "",
+  darkMode: "dark",
+  setDarkMode: () => {},
+});
+
+export function AppProvider({ children }: { children: React.ReactNode }) {
+  const [darkMode, setDarkMode] = useState<string>('dark');
+  const [user, setUser] = useState<IUser | null>({
+    name: "Guest User",
+    email: "guestuser@gmail.com",
+  });
 
   const logout = () => {
-    // setUser(null);
-    // eraseCookie(cookie_name);
+    setUser(null);
+    eraseCookie(cookie_name);
     console.log("Please implement your own Sign out logic");
     message.info("Please implement your own Sign out logic");
   };
 
-  const updateDarkMode = (darkMode: string) => {
-    setDarkMode(darkMode);
-    setLocalStorage("darkmode", darkMode, false);
+  const handleDarkModeChange = (mode: string) => {
+    console.log('Setting dark mode to:', mode);
+    setDarkMode(mode);
+    setLocalStorage("darkmode", mode);
+    if (typeof document !== 'undefined') {
+      document.documentElement.classList.toggle('dark', mode === 'dark');
+      document.documentElement.classList.toggle('light', mode === 'light');
+      document.body.style.backgroundColor = mode === 'dark' ? '#111827' : '#ffffff';
+    }
   };
 
-  // Modify logic here to add your own authentication
-  const initUser = {
-    name: "Guest User",
-    email: "guestuser@gmail.com",
-    username: "guestuser",
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+    const storedValue = getLocalStorage("darkmode", false);
+    const initialMode = storedValue === null ? "dark" : storedValue === "dark" ? "dark" : "light";
+    handleDarkModeChange(initialMode);
+  }, []);
+
+  const contextValue: IAppContext = {
+    user,
+    setUser,
+    logout,
+    cookie_name,
+    darkMode,
+    setDarkMode: handleDarkModeChange,
   };
-  const [user, setUser] = useState<IUser | null>(initUser);
 
   return (
-    <appContext.Provider
-      value={{
-        user,
-        setUser,
-        logout,
-        cookie_name,
-        darkMode,
-        setDarkMode: updateDarkMode,
-      }}
-    >
+    <appContext.Provider value={contextValue}>
       {children}
     </appContext.Provider>
   );
-};
-
-export default ({ element }: any) => <Provider>{element}</Provider>;
+}

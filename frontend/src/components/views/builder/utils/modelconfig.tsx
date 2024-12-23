@@ -31,9 +31,27 @@ const ModelTypeSelector = ({
       icon: <CpuChipIcon className="h-6 w-6 text-primary" />,
     },
     {
+      label: "Anthropic",
+      value: "anthropic",
+      description: "Anthropic",
+      icon: <CpuChipIcon className="h-6 w-6 text-primary" />,
+    },
+    {
       label: "Gemini",
       value: "google",
       description: "Gemini",
+      icon: <CpuChipIcon className="h-6 w-6 text-primary" />,
+    },
+    {
+      label: "Ollama",
+      value: "ollama",
+      description: "Ollama",
+      icon: <CpuChipIcon className="h-6 w-6 text-primary" />,
+    },
+    {
+      label: "Cerebras",
+      value: "cerebras",
+      description: "Cerebras",
       icon: <CpuChipIcon className="h-6 w-6 text-primary" />,
     },
   ];

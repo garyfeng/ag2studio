@@ -14,10 +14,14 @@ import Papa from "papaparse";
 import remarkGfm from "remark-gfm";
 import ReactMarkdown from "react-markdown";
 import { atomDark } from "react-syntax-highlighter/dist/esm/styles/prism";
-import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
+
+import { Prism, SyntaxHighlighterProps } from 'react-syntax-highlighter';
+const SyntaxHighlighter = (Prism as any) as React.FC<SyntaxHighlighterProps>;
+
 import { truncateText } from "./utils";
 
 const { useToken } = theme;
+
 interface CodeProps {
   node?: any;
   inline?: any;
@@ -40,6 +44,52 @@ interface IProps {
   onClick?: () => void;
   loading?: boolean;
 }
+
+interface CodeViewProps {
+  children: React.ReactNode;
+  language: string;
+  showCode?: boolean;
+}
+
+const CodeView = ({ children, language, showCode = true }: CodeViewProps) => {
+  const [codeVisible, setCodeVisible] = React.useState(showCode);
+  return (
+    <div>
+      <div className="flex">
+        <div
+          role="button"
+          onClick={() => {
+            setCodeVisible(!codeVisible);
+          }}
+          className="flex-1 mr-4"
+        >
+          {!codeVisible && (
+            <div className="text-white hover:text-accent duration-300">
+              <ChevronDownIcon className="inline-block w-5 h-5" />
+              <span className="text-xs"> show</span>
+            </div>
+          )}
+          {codeVisible && (
+            <div className="text-white hover:text-accent duration-300">
+              <ChevronUpIcon className="inline-block w-5 h-5" />
+              <span className="text-xs"> hide</span>
+            </div>
+          )}
+        </div>
+      </div>
+      {codeVisible && (
+        <SyntaxHighlighter
+        id="codeDiv"
+        className="rounded-sm h-full break-all"
+        children={String(children).replace(/\n$/, "")}
+        language={language}
+        PreTag="div"
+        style={atomDark}
+      />
+      )}
+    </div>
+  );
+};
 
 export const SectionHeader = ({
   children,
@@ -74,9 +124,8 @@ export const IconButton = ({
     <span
       role={"button"}
       onClick={onClick}
-      className={`inline-block mr-2 hover:text-accent transition duration-300 ${className} ${
-        active ? "border-accent border rounded text-accent" : ""
-      }`}
+      className={`inline-block mr-2 hover:text-accent transition duration-300 ${className} ${active ? "border-accent border rounded text-accent" : ""
+        }`}
     >
       {icon}
     </span>
@@ -168,9 +217,8 @@ export const CollapseBox = ({
         onClick={() => {
           setIsOpen(!isOpen);
         }}
-        className={`cursor-pointer bg-secondary p-2 rounded ${
-          isOpen ? "rounded-b-none " : " "
-        }"}`}
+        className={`cursor-pointer bg-secondary p-2 rounded ${isOpen ? "rounded-b-none " : " "
+          }"}`}
       >
         {isOpen && <ChevronUpIcon className={chevronClass} />}
         {!isOpen && <ChevronDownIcon className={chevronClass} />}
@@ -341,6 +389,20 @@ export const ExpandView = ({
   );
 };
 
+export const BounceLoader = ({
+  className,
+  title = "",
+}: {
+  className?: string;
+  title?: string;
+}) => {
+  return (
+    <div className={`animate-bounce ${className}`}>
+      <div className="w-2 h-2 bg-accent rounded-full"></div>
+    </div>
+  );
+};
+
 export const LoadingOverlay = ({ children, loading }: IProps) => {
   return (
     <>
@@ -376,76 +438,11 @@ export const MarkdownView = ({
   showCode?: boolean;
 }) => {
   function processString(inputString: string): string {
-    inputString = inputString.replace(/\n/g, "  \n");
+    inputString = inputString?.replace(/\n/g, "  \n");
     const markdownPattern = /```markdown\s+([\s\S]*?)\s+```/g;
     return inputString?.replace(markdownPattern, (match, content) => content);
   }
   const [showCopied, setShowCopied] = React.useState(false);
-
-  const CodeView = ({ props, children, language }: any) => {
-    const [codeVisible, setCodeVisible] = React.useState(showCode);
-    return (
-      <div>
-        <div className=" flex  ">
-          <div
-            role="button"
-            onClick={() => {
-              setCodeVisible(!codeVisible);
-            }}
-            className="  flex-1 mr-4  "
-          >
-            {!codeVisible && (
-              <div className=" text-white hover:text-accent duration-300">
-                <ChevronDownIcon className="inline-block  w-5 h-5" />
-                <span className="text-xs"> show</span>
-              </div>
-            )}
-
-            {codeVisible && (
-              <div className=" text-white hover:text-accent duration-300">
-                {" "}
-                <ChevronUpIcon className="inline-block  w-5 h-5" />
-                <span className="text-xs"> hide</span>
-              </div>
-            )}
-          </div>
-          {/* <div className="flex-1"></div> */}
-          <div>
-            {showCopied && (
-              <div className="inline-block text-sm       text-white">
-                {" "}
-                🎉 Copied!{" "}
-              </div>
-            )}
-            <ClipboardIcon
-              role={"button"}
-              onClick={() => {
-                navigator.clipboard.writeText(data);
-                // message.success("Code copied to clipboard");
-                setShowCopied(true);
-                setTimeout(() => {
-                  setShowCopied(false);
-                }, 3000);
-              }}
-              className=" inline-block duration-300 text-white hover:text-accent w-5 h-5"
-            />
-          </div>
-        </div>
-        {codeVisible && (
-          <SyntaxHighlighter
-            {...props}
-            style={atomDark}
-            language={language}
-            className="rounded w-full"
-            PreTag="div"
-            wrapLongLines={true}
-          >
-            {String(children).replace(/\n$/, "")}
-          </SyntaxHighlighter>
-        )}
-      </div>
-    );
-  };
 
   return (
     <div
@@ -459,7 +456,7 @@ export const MarkdownView = ({
             const match = /language-(\w+)/.exec(className || "");
             const language = match ? match[1] : "text";
             return !inline && match ? (
-              <CodeView props={props} children={children} language={language} />
+              <CodeView {...props} language={language}>{children}</CodeView>
             ) : (
               <code {...props} className={className}>
                 {children}
@@ -536,14 +533,14 @@ export const CodeBlock = ({
         <SyntaxHighlighter
           id="codeDiv"
           className="rounded-sm h-full break-all"
+          children={codeString}
           language={language}
+          PreTag="div"
           showLineNumbers={showLineNumbers}
           style={atomDark}
           wrapLines={wrapLines}
           wrapLongLines={wrapLines}
-        >
-          {codeString}
-        </SyntaxHighlighter>
+        />
       </div>
     </div>
   );
@@ -582,25 +579,6 @@ export const ControlRowView = ({
   );
 };
 
-export const BounceLoader = ({
-  className,
-  title = "",
-}: {
-  className?: string;
-  title?: string;
-}) => {
-  return (
-    <div className="inline-block">
-      <div className="inline-flex gap-2">
-        <span className="  rounded-full bg-accent h-2 w-2  inline-block"></span>
-        <span className="animate-bounce rounded-full bg-accent h-3 w-3  inline-block"></span>
-        <span className=" rounded-full bg-accent h-2 w-2  inline-block"></span>
-      </div>
-      <span className="  text-sm">{title}</span>
-    </div>
-  );
-};
-
 export const ImageLoader = ({
   src,
   className = "",
@@ -620,9 +598,8 @@ export const ImageLoader = ({
       <img
         alt="Dynamic content"
         src={src}
-        className={`w-full  rounded ${
-          isLoading ? "opacity-0" : "opacity-100"
-        } ${className}`}
+        className={`w-full  rounded ${isLoading ? "opacity-0" : "opacity-100"
+          } ${className}`}
         onLoad={() => setIsLoading(false)}
       />
     </div>

@@ -73,7 +73,7 @@ const RAView = () => {
                 <div className="w-full   text-center">
                   {" "}
                   <img
-                    src="/images/svgs/welcome.svg"
+                    src="/static/images/svgs/welcome.svg"
                     alt="welcome"
                     className="text-accent inline-block object-cover w-56"
                   />

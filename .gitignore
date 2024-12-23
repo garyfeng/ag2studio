@@ -14,3 +14,7 @@ dist/
 test_env/
 /ag2studio/web/ui
 /venv
+/frontend/.next
+/frontend/out
+.env
+/frontend/out

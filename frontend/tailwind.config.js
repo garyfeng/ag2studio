@@ -3,6 +3,9 @@ module.exports = {
   darkMode: "class",
   theme: {
     extend: {
+      fontFamily: {
+        mono: ['"JetBrains Mono"', 'monospace'],
+      },
       typography: {
         DEFAULT: {
           css: {

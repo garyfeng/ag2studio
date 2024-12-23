@@ -26,7 +26,7 @@ const Layout = ({
   const layoutContent = (
     <div
       // style={{ height: "calc(100vh - 64px)" }}
-      className={`  h-full flex flex-col`}
+      className={`h-full flex flex-col`}
     >
       {showHeader && <Header meta={meta} link={link} />}
       <div className="flex-1  text-primary ">
@@ -48,7 +48,7 @@ const Layout = ({
     <appContext.Consumer>
       {(context: any) => {
         if (restricted) {
-          return <div className="h-full ">{context.user && layoutContent}</div>;
+          return <div className="h-full">{context.user && layoutContent}</div>;
         } else {
           return layoutContent;
         }

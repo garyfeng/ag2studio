@@ -9,9 +9,16 @@ import {
 } from "./types";
 
 export const getServerUrl = () => {
-  return process.env.GATSBY_API_URL || "/api";
+  if (typeof window === "undefined") {
+    return "/api";
+  }
+  // For development
+  if (process.env.NODE_ENV === "development") {
+    return process.env.NEXT_PUBLIC_API_URL || "http://127.0.0.1:8081/api";
+  }
+  // For production
+  return "/api";
 };
-
 export function setCookie(name: string, value: any, days: number) {
   let expires = "";
   if (days) {

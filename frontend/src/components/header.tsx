@@ -1,3 +1,5 @@
+'use client'
+
 import Icon from "./icons";
 import { Disclosure, Menu, Transition } from "@headlessui/react";
 import {
@@ -9,15 +11,17 @@ import {
 } from "@heroicons/react/24/outline";
 import { Fragment } from "react";
 import { appContext } from "../hooks/provider";
-import { Link } from "gatsby";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 import React from "react";
 
 function classNames(...classes: string[]) {
   return classes.filter(Boolean).join(" ");
 }
 
-const Header = ({ meta, link }: any) => {
+const Header = ({ meta = { title: "Studio", description: "AgentOS" }, link }: any) => {
   const { user, logout } = React.useContext(appContext);
+  const pathname = usePathname();
   const userName = user ? user.name : "Unknown";
   const userAvatarUrl = user ? user.avatar_url : "";
   const user_id = user ? user.username : "unknown";
@@ -30,34 +34,28 @@ const Header = ({ meta, link }: any) => {
   ];
 
   const DarkModeToggle = () => {
+    const { darkMode, setDarkMode } = React.useContext(appContext);
+    
     return (
-      <appContext.Consumer>
-        {(context: any) => {
-          return (
-            <button
-              onClick={() => {
-                if (context.darkMode === "dark") {
-                  context.setDarkMode("light");
-                } else {
-                  context.setDarkMode("dark");
-                }
-              }}
-              type="button"
-              className="flex-shrink-0 bg-primary p-1 text-secondary rounded-full hover:text-secondary focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-accent"
-            >
-              <span className="sr-only">Toggle dark mode </span>
-              {context.darkMode === "dark" && (
-                <MoonIcon className="h-6 w-6" aria-hidden="true" />
-              )}
-              {context.darkMode === "light" && (
-                <SunIcon className="h-6 w-6" aria-hidden="true" />
-              )}
-            </button>
-          );
+      <button
+        onClick={() => {
+          const newMode = darkMode === "dark" ? "light" : "dark";
+          console.log('Toggling dark mode to:', newMode);
+          setDarkMode(newMode);
         }}
-      </appContext.Consumer>
+        type="button"
+        className="flex-shrink-0 bg-primary p-1 text-secondary rounded-full hover:text-secondary focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-accent"
+      >
+        <span className="sr-only">Toggle dark mode</span>
+        {darkMode === "dark" ? (
+          <SunIcon className="h-6 w-6" aria-hidden="true" />
+        ) : (
+          <MoonIcon className="h-6 w-6" aria-hidden="true" />
+        )}
+      </button>
     );
   };
+
   return (
     <Disclosure
       as="nav"
@@ -69,26 +67,26 @@ const Header = ({ meta, link }: any) => {
             <div className="flex justify-between h-16">
               <div className="flex  lg:px-0 ">
                 <div className="flex flex-shrink-0 pt-2">
-                  <a className="block  " href="/#">
-                    <span className=" bg-primary  inline-block pt-2 absolute">
+                  <Link href="/" className="block">
+                    <span className="inline-block pt-2 absolute">
                       {" "}
-                      <div className="inline-block w-10  text-accent   bg-primary pb-2 mr-1">
-                        <Icon icon="app" size={8} />
+                      <div className="inline-block w-12 text-accent pb-2 mr-1">
+                        <Icon icon="ag2" size={14} />
                       </div>{" "}
                     </span>
-                    <div className="pt-1 text-lg ml-14     inline-block">
+                    <div className="pt-1 text-lg ml-14 inline-block">
                       <div className=" flex flex-col">
-                        <div className="text-base">{meta.title}</div>
+                        <div className="text-base font-jersey">{meta.title}</div>
                         <div className="text-xs"> {meta.description}</div>
                       </div>
                     </div>
-                  </a>
+                  </Link>
                 </div>
 
                 <div className="hidden md:ml-6 md:flex md:space-x-6">
                   {/* Current: "border-accent text-gray-900", Default: "border-transparent text-secondary hover:border-gray-300 hover:text-primary" */}
                   {links.map((data, index) => {
-                    const isActive = data.href === link;
+                    const isActive = pathname === data.href;
                     const activeClass = isActive
                       ? "bg-accent  "
                       : "bg-secondary ";
@@ -98,8 +96,8 @@ const Header = ({ meta, link }: any) => {
                         className={`text-primary  items-center hover:text-accent  px-1 pt-1 block   text-sm font-medium `}
                       >
                         <Link
+                          href={data.href}
                           className="hover:text-accent h-full flex flex-col"
-                          to={data.href}
                         >
                           <div className=" flex-1 flex-col flex">
                             <div className="flex-1"></div>
@@ -132,13 +130,13 @@ const Header = ({ meta, link }: any) => {
 
                   {user && (
                     <>
-                      <div className="ml-3">
+                      <div className="ml-3 hidden">
                         <div className="text-sm text-primary">{userName}</div>
                         <div className="text-xs  text-secondary">{user_id}</div>
                       </div>
 
                       {/* Profile dropdown */}
-                      <Menu as="div" className="ml-4 relative flex-shrink-0">
+                      <Menu as="div" className="ml-4 relative flex-shrink-0 hidden">
                         <div>
                           <Menu.Button className="bg-primary rounded-full flex text-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-accent">
                             <span className="sr-only">Open user menu</span>
@@ -174,9 +172,7 @@ const Header = ({ meta, link }: any) => {
                           >
                             Your Profile
                           </a>
-                        )}
-                      </Menu.Item> */}
-
+                        )} */}
                             <Menu.Item>
                               {({ active }) => (
                                 <a

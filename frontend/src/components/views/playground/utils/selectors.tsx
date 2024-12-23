@@ -1,10 +1,12 @@
+'use client'
+
 import { Select, message } from "antd";
 import * as React from "react";
 import { LoadingOverlay } from "../../../atoms";
 import { IWorkflow, IStatus } from "../../../types";
 import { fetchJSON, getServerUrl } from "../../../utils";
 import { appContext } from "../../../../hooks/provider";
-import { Link } from "gatsby";
+import Link from "next/link";
 
 const WorkflowSelector = ({
   workflow,
@@ -95,7 +97,7 @@ const WorkflowSelector = ({
           View all workflows{" "}
           <span className="text-accent">
             {" "}
-            <Link to="/build">here</Link>
+            <Link href="/build">here</Link>
           </span>{" "}
         </div>
       </div>
@@ -109,4 +111,5 @@ const WorkflowSelector = ({
     </div>
   );
 };
+
 export default WorkflowSelector;
