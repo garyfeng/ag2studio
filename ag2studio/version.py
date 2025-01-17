@@ -1,10 +1,10 @@
-# Copyright (c) 2023 - 2024, Owners of https://github.com/ag2ai
+# Copyright (c) 2023 - 2025, Owners of https://github.com/ag2ai
 #
 # SPDX-License-Identifier: Apache-2.0
 #
 # Portions derived from  https://github.com/microsoft/autogen are under the MIT License.
 # SPDX-License-Identifier: MIT
-VERSION = "0.0.1-rc3"
+VERSION = "0.0.1-rc4"
 __version__ = VERSION
 APP_NAME = "ag2studio"
 AUTHOR = "Chi Wang & Qingyun Wu"
