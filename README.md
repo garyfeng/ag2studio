@@ -83,7 +83,7 @@ Now that you have AG2 Studio installed and running, you are ready to explore its
 
 We welcome contributions to AG2 Studio. We recommend the following general steps to contribute to the project:
 
-- Review the overall AG2 project [contribution guide](https://github.com/ag2ai/ag2?tab=readme-ov-file#contributing)
+- Review the overall AG2 project [contribution guide](https://docs.ag2.ai/docs/contributor-guide/contributing)
 - Please initiate a discussion on the roadmap issue or a new issue to discuss your proposed contribution.
 - Submit a pull request with your contribution!
 - If you are modifying AG2 Studio, it has its own devcontainer. See instructions in `.devcontainer/README.md` to use it
@@ -91,7 +91,7 @@ We welcome contributions to AG2 Studio. We recommend the following general steps
 
 ## FAQ
 
-Please refer to the AG2 Studio [FAQs](https://ag2ai.github.io/ag2/docs/autogen-studio/faqs) page for more information.
+Please refer to the AG2 Studio [FAQs](docs/faq.md) page for more information.
 
 ## Acknowledgements
 
