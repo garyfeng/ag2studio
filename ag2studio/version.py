@@ -4,7 +4,7 @@
 #
 # Portions derived from  https://github.com/microsoft/autogen are under the MIT License.
 # SPDX-License-Identifier: MIT
-VERSION = "0.0.1-rc4"
+VERSION = "0.0.1-rc5"
 __version__ = VERSION
 APP_NAME = "ag2studio"
 AUTHOR = "Chi Wang & Qingyun Wu"
