@@ -11,7 +11,7 @@ AG2 Studio is an AG2-powered AI app (user interface) to help you rapidly prototy
 Project Structure:
 
 - _ag2studio/_ code for the backend classes and web api (FastAPI)
-- _frontend/_ code for the webui, built with Node.js and TailwindCSS
+- _frontend/_ code for the webui, built with Next.js and TailwindCSS
 
 ### Installation
 
