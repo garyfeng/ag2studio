@@ -69,6 +69,12 @@ ag2studio ui --port 8081
 
 This will start the application on the specified port. Open your web browser and go to `http://localhost:8081/` to begin using AG2 Studio.
 
+### First Step
+You will need to set your API keys for your models before you can use them.
+
+The default workflows use the `gpt-4o-mini` model, be sure to set the key and test it under the Models section for that model before running the Default or Travel Planning workflows.
+
+### Parameters
 AG2 Studio also takes several parameters to customize the application:
 
 - `--host <host>` argument to specify the host address. By default, it is set to `localhost`. Y
