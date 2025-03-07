@@ -9,5 +9,5 @@ Renamed the original dockerfile as `Dockerfile-ori`, and created a new `Dockerfi
 
 ```sh
 docker build -t ag2studio .
-docker run -p 8081:8081 ag2studio  --bind 0.0.0.0
+docker run -p 8081:8081 -e .env ag2studio ag2studio ui --port 8081 --host 0.0.0.0
 ```
